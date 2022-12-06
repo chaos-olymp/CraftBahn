@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 -- Tabellenstruktur für Tabelle `cb_portals`
 --
 
-CREATE TABLE `cb_portals` (
+CREATE TABLE `srv_portals` (
   `id` int(11) NOT NULL,
   `name` int(16) NOT NULL,
   `target_host` int(255) DEFAULT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE `cb_portals` (
 --
 -- Indizes für die Tabelle `cb_portals`
 --
-ALTER TABLE `cb_portals`
+ALTER TABLE `srv_portals`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `name` (`name`);
 
@@ -57,7 +57,7 @@ ALTER TABLE `cb_portals`
 --
 -- AUTO_INCREMENT für Tabelle `cb_portals`
 --
-ALTER TABLE `cb_portals`
+ALTER TABLE `srv_portals`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 

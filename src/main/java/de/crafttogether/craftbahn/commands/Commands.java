@@ -56,11 +56,11 @@ public class Commands implements TabExecutor {
                 Random rand = new Random();
                 Destination dest = list.get(rand.nextInt(list.size()));
 
-                sendMessage(p, "&6CraftBahn &8» &cDu wurdest zum " + dest.getType() + " &f'&e" + dest.getName() + "'&f &cteleportiert.");
+                sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cDu wurdest zum " + dest.getType() + " &e'&e" + dest.getName() + "'&e &cteleportiert.");
                 p.teleport(dest.getTeleportLocation().getBukkitLocation());
             }
             else
-                sendMessage(p, "&6CraftBahn &8» &cEs wurde kein mögliches Ziel gefunden.");
+                sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs wurde kein mögliches Ziel gefunden.");
         }
 
         else if (cmd.getName().equalsIgnoreCase("fahrziel")) {
@@ -71,54 +71,12 @@ public class Commands implements TabExecutor {
                 return false;
 
             if (args.length == 0) {
-                sendMessage(p, "&e-------------- &c&lCraftBahn &e--------------");
+                sendMessage(p, "");
 
                 TextComponent message = new TextComponent();
-                message.addExtra(Message.newLine());
-                message.addExtra(Message.format("&6CraftBahn &8» &6Willkommen bei der CraftBahn!"));
-                message.addExtra(Message.newLine());
-                message.addExtra(Message.format("&6CraftBahn &8» &eUnser Schienennetz erstreckt sich"));
-                message.addExtra(Message.newLine());
-                message.addExtra(Message.format("&6CraftBahn &8» &ein alle Himmelsrichtungen."));
-                message.addExtra(Message.newLine());
-                message.addExtra(Message.format("&6CraftBahn &8"));
-                message.addExtra(Message.newLine());
-                message.addExtra(Message.format("&6CraftBahn &8» &6&lAnleitung: "));
+                message.addExtra(Message.format("&8[&e&l!&8] &b&lCraftBahn &8» &7Verwendung: &e/fahrziele oder /fahrziel <Name>"));
                 p.spigot().sendMessage(message);
 
-                message = new TextComponent();
-                message.addExtra(Message.format("&6CraftBahn &8» &c/bahnhof"));
-                message.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/bahnhof"));
-                message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, (new ComponentBuilder(Message.format("&eHowTo: &6Bahnhof"))).create()));
-                p.spigot().sendMessage(message);
-
-                message = new TextComponent();
-                message.addExtra(Message.format("&6CraftBahn &8"));
-                message.addExtra(Message.newLine());
-                message.addExtra(Message.format("&6CraftBahn &8» &6&lFahrziel wählen"));
-                p.spigot().sendMessage(message);
-
-                message = new TextComponent();
-                message.addExtra(Message.format("&6CraftBahn &8» &c/fahrziele"));
-                message.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/fahrziele"));
-                message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, (new ComponentBuilder(Message.format("&6Alle Fahrziele auflisten"))).create()));
-                p.spigot().sendMessage(message);
-                sendMessage(p, "&6CraftBahn &8» &eoder");
-
-                message = new TextComponent();
-                message.addExtra(Message.format("&6CraftBahn &8» &c/fahrziel &7<name>"));
-                message.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/fahrziel "));
-                message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, (new ComponentBuilder(Message.format("&6Lege ein Fahrziel fest mit &c/fahrziel &7<name>"))).create()));
-                p.spigot().sendMessage(message);
-
-                message = new TextComponent();
-                message.addExtra(Message.format("&6CraftBahn &8"));
-                message.addExtra(Message.newLine());
-                message.addExtra(Message.format("&6CraftBahn &8» &eGute Fahrt!"));
-                message.addExtra(Message.newLine());
-                message.addExtra(Message.format("&e----------------------------------------"));
-                message.addExtra(Message.newLine());
-                p.spigot().sendMessage(message);
                 return true;
             }
 
@@ -142,7 +100,7 @@ public class Commands implements TabExecutor {
                 found = new ArrayList<>(destinationStorage.getDestinations(args[0]));
 
             if (found.size() < 1) {
-                sendMessage(p, "&6CraftBahn &8» &cEs existiert kein Ziel dem Namen &f'&e" + args[0] + "&f'" + (serverName != null ? " &cauf dem angegebenen Server." : ""));
+                sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs existiert kein Ziel mit dem Namen &c'&c" + args[0] + "&c'" + (serverName != null ? " &cauf dem angegebenen Server." : ""));
                 return true;
             }
 
@@ -153,11 +111,11 @@ public class Commands implements TabExecutor {
                 list.showLocation(true);
                 list.showFooter(true);
 
-                sendMessage(p, "&e-------------- &c&lCraftBahn &e--------------");
+                sendMessage(p, "");
 
                 if (page == null) {
                     p.sendMessage(Message.newLine());
-                    sendMessage(p, "&6CraftBahn &8» &eEs wurden mehrere mögliche Ziele gefunden:");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &aEs wurden mehrere mögliche Ziele gefunden:");
                 }
 
                 list.sendPage(p, (page == null ? 1 : page));
@@ -167,14 +125,14 @@ public class Commands implements TabExecutor {
             Destination dest = found.get(0);
 
             if (!dest.isPublic() && !p.hasPermission("ctdestinations.see.private")) {
-                sendMessage(p, "&6CraftBahn &8» &cAuf dieses Ziel hast du keinen Zugriff.");
+                sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cAuf dieses Ziel hast du keinen Zugriff.");
                 return true;
             }
 
             MinecartGroup train = TCHelper.getTrain(p);
 
             if (train == null) {
-                sendMessage(p, "&6CraftBahn &8» &cBitte setze dich zuerst in einen Zug.");
+                sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cBitte setze dich zuerst in einen Zug.");
                 return true;
             }
 
@@ -192,7 +150,7 @@ public class Commands implements TabExecutor {
                 train.getProperties().setDestination(dest.getName());
             }
 
-            sendMessage(p, "&6CraftBahn &8» &eFahrziel gesetzt!");
+            sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &aFahrziel gesetzt");
 
             return true;
         }
@@ -205,32 +163,33 @@ public class Commands implements TabExecutor {
                 return false;
 
             if (args.length == 0) {
-                sendMessage(p, "&e/fahrziel &7<name> [server] &8| &6Fahrziel festlegen");
-                sendMessage(p, "&e/fahrziele &7[kategorie] [seite] &8| &6Fahrziele auflisten");
-                sendMessage(p, "&e/fze info &7<name> [server] &8| &6Details zu Fahrziel anzeigen");
-                sendMessage(p, "&e/fze add &7<name> [typ] [sichtbarkeit] &8| &6Neues Fahrziel anlegen");
-                sendMessage(p, "&e/fze remove &7<name> [server] &8| &6Fahrziel entfernen");
-                sendMessage(p, "&e/fze settype &7<name> [server] <typ> &8| &6Kategorie aktualisieren");
-                sendMessage(p, "&e/fze setowner &7<name> [server] &8| &6Besitzer aktualisieren");
-                sendMessage(p, "&e/fze addmember &7<name> [server] &8| &6Weitere Besitzer hinzufügen");
-                sendMessage(p, "&e/fze removemember &7<name> [server] &8| &6Weitere Besitzer entfernen");
-                sendMessage(p, "&e/fze setlocation &7<name> &8| &6(Marker-)Position aktualisieren");
-                sendMessage(p, "&e/fze settplocation &7<name> &8| &6Teleport-Position aktualisieren");
-                sendMessage(p, "&e/fze setprivate &7<name> [server] &8| &6Fahrziel verstecken");
-                sendMessage(p, "&e/fze setpublic &7<name> [server] &8| &6Fahrziel wieder anzeigen");
-                sendMessage(p, "&e/fze tp &7<name> [server] &8| &6Teleportiere zu Fahrziel");
-                sendMessage(p, "&e/fze updatemarker &7<name> [server] &8| &6Aktualisiere Dynmap-Marker");
-                sendMessage(p, "&e/fze updateportals &8| &6Aktualisiere Portale");
+                sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &eAlle Befehle");
+                sendMessage(p, "&7/fahrziel &7<name> [server] &8- &eFahrziel festlegen");
+                sendMessage(p, "&7/fahrziele &7[kategorie] [seite] &8- &eFahrziele auflisten");
+                sendMessage(p, "&7/fze info &7<name> [server] &8- &eDetails zu Fahrziel anzeigen");
+                sendMessage(p, "&7/fze add &7<name> [typ] [sichtbarkeit] &8- &eNeues Fahrziel anlegen");
+                sendMessage(p, "&7/fze remove &7<name> [server] &8- &eFahrziel entfernen");
+                sendMessage(p, "&7/fze settype &7<name> [server] <typ> &8- &eKategorie aktualisieren");
+                sendMessage(p, "&7/fze setowner &7<name> [server] &8- &eBesitzer aktualisieren");
+                sendMessage(p, "&7/fze addmember &7<name> [server] &8- &eWeitere Besitzer hinzufügen");
+                sendMessage(p, "&7/fze removemember &7<name> [server] &8- &eWeitere Besitzer entfernen");
+                sendMessage(p, "&7/fze setlocation &7<name> &8- &e(Marker-)Position aktualisieren");
+                sendMessage(p, "&7/fze settplocation &7<name> &8- &eTeleport-Position aktualisieren");
+                sendMessage(p, "&7/fze setprivate &7<name> [server] &8- &eFahrziel verstecken");
+                sendMessage(p, "&7/fze setpublic &7<name> [server] &8- &eFahrziel wieder anzeigen");
+                sendMessage(p, "&7/fze tp &7<name> [server] &8- &eTeleportiere zu Fahrziel");
+                sendMessage(p, "&7/fze updatemarker &7<name> [server] &8- &eAktualisiere Dynmap-Marker");
+                sendMessage(p, "&7/fze updateportals &8- &eAktualisiere Portale");
             }
 
             else if (args[0].equalsIgnoreCase("info")) {
                 if (!p.hasPermission("ctdestinations.edit.remove")) {
-                    sendMessage(p, "&cDazu hast du keine Berechtigung.");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cDazu hast du keine Rechte");
                     return true;
                 }
 
                 if (args.length < 2 || args[1].equals("") || args[1].length() < 1) {
-                    sendMessage(p, "&6CraftBahn &8» &cBitte gebe den Namen des Ziel ein.");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cBitte gebe den Namen des Ziel ein.");
                     return true;
                 }
 
@@ -240,7 +199,7 @@ public class Commands implements TabExecutor {
 
                 Destination dest = destinationStorage.getDestination(args[1], serverName);
                 if (dest == null) {
-                    sendMessage(p, "&6CraftBahn &8» &cEs existiert kein Ziel mit diesem Namen.");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs existiert kein Ziel mit diesem Namen.");
                     return true;
                 }
 
@@ -254,25 +213,25 @@ public class Commands implements TabExecutor {
                 if (strParticipants.length() > 1)
                     strParticipants = new StringBuilder(strParticipants.substring(0, strParticipants.length() - 2));
 
-                TextComponent message = Message.format("&e-------------- &c&lCraftBahn &e--------------");
+                TextComponent message = Message.format("");
                 message.addExtra(Message.newLine());
-                message.addExtra(Message.format("&6CraftBahn &8» &6Fahrziel: &e" + dest.getName()));
+                message.addExtra(Message.format("&8[&e&l!&8] &b&lCraftBahn &8» &7Fahrziel: &e" + dest.getName()));
                 message.addExtra(Message.newLine());
-                message.addExtra(Message.format("&6CraftBahn &8» &6ID: &e" + dest.getId()));
+                message.addExtra(Message.format("&8[&e&l!&8] &b&lCraftBahn &8» &7ID: &e" + dest.getId()));
                 message.addExtra(Message.newLine());
-                message.addExtra(Message.format("&6CraftBahn &8» &6Typ: &e" + dest.getType()));
+                message.addExtra(Message.format("&8[&e&l!&8] &b&lCraftBahn &8» &7Typ: &e" + dest.getType()));
                 message.addExtra(Message.newLine());
-                message.addExtra(Message.format("&6CraftBahn &8» &6Besitzer: &e" + dest.getType()));
+                message.addExtra(Message.format("&8[&e&l!&8] &b&lCraftBahn &8» &7Besitzer: &e" + dest.getType()));
                 message.addExtra(Message.newLine());
-                message.addExtra(Message.format("&6CraftBahn &8» &6Mitwirkend: &e" + strParticipants));
+                message.addExtra(Message.format("&8[&e&l!&8] &b&lCraftBahn &8» &7Mitwirkend: &e" + strParticipants));
                 message.addExtra(Message.newLine());
-                message.addExtra(Message.format("&6CraftBahn &8» &6Server: &e" + dest.getServer()));
+                message.addExtra(Message.format("&8[&e&l!&8] &b&lCraftBahn &8» &7Server: &e" + dest.getServer()));
                 message.addExtra(Message.newLine());
-                message.addExtra(Message.format("&6CraftBahn &8» &6Welt: &e" + dest.getWorld()));
+                message.addExtra(Message.format("&8[&e&l!&8] &b&lCraftBahn &8» &7Welt: &e" + dest.getWorld()));
                 message.addExtra(Message.newLine());
-                message.addExtra(Message.format("&6CraftBahn &8» &eX: &6" + dest.getLocation().getX() + "&e, Y: &6" + dest.getLocation().getY() + "&e, Z: &6" + dest.getLocation().getZ()));
+                message.addExtra(Message.format("&8[&e&l!&8] &b&lCraftBahn &8» &7X: &e" + dest.getLocation().getX() + "&7, Y: &e" + dest.getLocation().getY() + "&7, Z: &e" + dest.getLocation().getZ()));
                 message.addExtra(Message.newLine());
-                message.addExtra(Message.format("&e----------------------------------------"));
+                message.addExtra(Message.format(""));
 
                 p.sendMessage(message);
             }
@@ -281,22 +240,22 @@ public class Commands implements TabExecutor {
                 boolean isPublic = true;
 
                 if (!p.hasPermission("ctdestinations.edit.add")) {
-                    sendMessage(p, "&cDazu hast du keine Berechtigung.");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cDazu hast du keine Rechte");
                     return true;
                 }
 
                 if (args.length < 2) {
-                    sendMessage(p, "&6CraftBahn &8» &cEs wurde kein Ziel angegeben");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs wurde kein Ziel angegeben");
                     return true;
                 }
 
                 if (destinationStorage.getDestination(args[1], CraftBahnPlugin.getInstance().getServerName()) != null) {
-                    sendMessage(p, "&6CraftBahn &8» &cEs existiert bereits ein Ziel mit diesem Namen in der Liste.");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs existiert bereits ein Ziel mit diesem Namen in der Liste.");
                     return true;
                 }
 
                 if (args.length < 3) {
-                    sendMessage(p, "&6CraftBahn &8» &cEs wurde kein Stationstyp angegeben");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs wurde kein Stationstyp angegeben");
                     return true;
                 }
 
@@ -310,73 +269,73 @@ public class Commands implements TabExecutor {
                 } catch (Exception ignored) {}
 
                 if (type == null) {
-                    sendMessage(p, "&6CraftBahn &8» &cUngültiger Stationstyp.");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cUngültiger Stationstyp.");
                     return true;
                 }
 
                 Player finalP = p;
                 destinationStorage.addDestination(args[1], p.getUniqueId(), type, p.getLocation(), isPublic, (err, dest) -> {
                     if (err != null)
-                        sendMessage(finalP, "&6CraftBahn &8» Es trat ein Fehler beim speichern des Fahrziel auf. Bitte kontaktiere einen Administrator.");
+                        sendMessage(finalP, "&8[&e&l!&8] &b&lCraftBahn &8» Es trat ein Fehler beim speichern des Fahrziel auf. Bitte kontaktiere einen Administrator.");
                     else {
                         MarkerManager.addMarker(dest);
-                        sendMessage(finalP, "&6CraftBahn &8» &aFahrziel wurde erstellt. ID: " + dest.getId());
+                        sendMessage(finalP, "&8[&e&l!&8] &b&lCraftBahn &8» &aFahrziel wurde erstellt. ID: " + dest.getId());
                     }
                 });
             }
 
             else if (args[0].equalsIgnoreCase("remove")) {
                 if (!p.hasPermission("ctdestinations.edit.remove")) {
-                    sendMessage(p, "&cDazu hast du keine Berechtigung.");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cDazu hast du keine Rechte");
                     return true;
                 }
 
                 if (args.length < 2 || args[1].equals("") || args[1].length() < 1) {
-                    sendMessage(p, "&6CraftBahn &8» &cBitte gebe den Namen des Ziel ein.");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cBitte gebe den Namen des Ziel ein.");
                     return true;
                 }
 
                 Destination dest = destinationStorage.getDestination(args[1], CraftBahnPlugin.getInstance().getServerName());
                 if (dest == null) {
-                    sendMessage(p, "&6CraftBahn &8» &cEs existiert kein Ziel mit diesem Namen.");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs existiert kein Ziel mit diesem Namen.");
                     return true;
                 }
 
                 Player finalP = p;
                 destinationStorage.delete(dest.getId(), (err, affectedRows) -> {
                     if (err != null)
-                        sendMessage(finalP, "&6CraftBahn &8» Es trat ein Fehler beim speichern der Änderungen auf. Bitte kontaktiere einen Administrator.");
+                        sendMessage(finalP, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs trat ein Fehler beim speichern der Änderungen auf. Bitte kontaktiere einen Administrator.");
                     else {
                         MarkerManager.deleteMarker(dest);
-                        sendMessage(finalP, "&6CraftBahn &8» &aZiel gelöscht.");
+                        sendMessage(finalP, "&8[&e&l!&8] &b&lCraftBahn &8» &aZiel gelöscht.");
                     }
                 });
             }
 
             else if (args[0].equalsIgnoreCase("setowner")) {
                 if (!p.hasPermission("ctdestinations.edit.setowner")) {
-                    sendMessage(p, "&cDazu hast du keine Berechtigung.");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cDazu hast du keine Rechte");
                     return true;
                 }
 
                 if (args.length < 2) {
-                    sendMessage(p, "&6CraftBahn &8» &6CraftBahn &8&cEs wurde kein Ziel angegeben.");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs wurde kein Ziel angegeben.");
                     return true;
                 }
 
                 if (destinationStorage.getDestination(args[1], CraftBahnPlugin.getInstance().getServerName()) == null) {
-                    sendMessage(p, "&6CraftBahn &8» &cEs existiert kein Ziel mit diesem Namen");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs existiert kein Ziel mit diesem Namen");
                     return true;
                 }
 
                 if (args.length < 3) {
-                    sendMessage(p, "&6CraftBahn &8» &cEs wurde kein Spieler angegeben");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs wurde kein Spieler angegeben");
                     return true;
                 }
 
                 OfflinePlayer owner = Bukkit.getOfflinePlayer(args[2]);
                 if (owner == null || !owner.hasPlayedBefore()) {
-                    sendMessage(p, "&6CraftBahn &8» &cEs wurde kein Spieler mit dem Namen &e" + args[2] + " &cgefunden");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs wurde kein Spieler mit dem Namen &e" + args[2] + " &cgefunden");
                     return true;
                 }
 
@@ -387,9 +346,9 @@ public class Commands implements TabExecutor {
                 Player finalP = p;
                 destinationStorage.update(dest, (err, affectedRows) -> {
                     if (err != null)
-                        sendMessage(finalP, "&6CraftBahn &8» Es trat ein Fehler beim speichern der Änderungen auf. Bitte kontaktiere einen Administrator.");
+                        sendMessage(finalP, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs trat ein Fehler beim speichern der Änderungen auf. Bitte kontaktiere einen Administrator.");
                     else
-                        sendMessage(finalP, "&6CraftBahn &8» &f'&e" + dest.getName() + "&f' &6gehört nun &e" + owner.getName());
+                        sendMessage(finalP, "&8[&e&l!&8] &b&lCraftBahn &8» &e'&e" + dest.getName() + "&e' &6gehört nun &e" + owner.getName());
                 });
             }
 
@@ -400,23 +359,23 @@ public class Commands implements TabExecutor {
                 }
 
                 if (args.length < 2) {
-                    sendMessage(p, "&6CraftBahn &8» &6CraftBahn &8&cEs wurde kein Ziel angegeben.");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &6CraftBahn &cEs wurde kein Ziel angegeben.");
                     return true;
                 }
 
                 if (destinationStorage.getDestination(args[1], CraftBahnPlugin.getInstance().getServerName()) == null) {
-                    sendMessage(p, "&6CraftBahn &8» &cEs existiert kein Ziel mit diesem Namen");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs existiert kein Ziel mit diesem Namen");
                     return true;
                 }
 
                 if (args.length < 3) {
-                    sendMessage(p, "&6CraftBahn &8» &cEs wurde kein Spieler angegeben");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs wurde kein Spieler angegeben");
                     return true;
                 }
 
                 OfflinePlayer owner = Bukkit.getOfflinePlayer(args[2]);
                 if (owner == null || !owner.hasPlayedBefore()) {
-                    sendMessage(p, "&6CraftBahn &8» &cEs wurde kein Spieler mit dem Namen &e" + args[2] + " &cgefunden");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs wurde kein Spieler mit dem Namen &e" + args[2] + " &cgefunden");
                     return true;
                 }
 
@@ -427,36 +386,36 @@ public class Commands implements TabExecutor {
                 Player finalP = p;
                 destinationStorage.update(dest, (err, affectedRows) -> {
                     if (err != null)
-                        sendMessage(finalP, "&6CraftBahn &8» Es trat ein Fehler beim speichern der Änderungen auf. Bitte kontaktiere einen Administrator.");
+                        sendMessage(finalP, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs trat ein Fehler beim speichern der Änderungen auf. Bitte kontaktiere einen Administrator.");
                     else
-                        sendMessage(finalP, "&6CraftBahn &8» &6Du hast &e" + owner.getName() + " &6als Besitzer des Fahrziel &f'&e" + dest.getName() + "&f' &2hinzugefügt.");
+                        sendMessage(finalP, "&8[&e&l!&8] &b&lCraftBahn &8» &6Du hast &e" + owner.getName() + " &6als Besitzer des Fahrziel &e'&e" + dest.getName() + "&e' &2hinzugefügt.");
                 });
             }
 
             else if (args[0].equalsIgnoreCase("removemember")) {
                 if (!p.hasPermission("ctdestinations.edit.removemember")) {
-                    sendMessage(p, "&cDazu hast du keine Berechtigung.");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cDazu hast du keine Rechte");
                     return true;
                 }
 
                 if (args.length < 2) {
-                    sendMessage(p, "&6CraftBahn &8» &6CraftBahn &8&cEs wurde kein Ziel angegeben.");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &8&cEs wurde kein Ziel angegeben.");
                     return true;
                 }
 
                 if (destinationStorage.getDestination(args[1], CraftBahnPlugin.getInstance().getServerName()) == null) {
-                    sendMessage(p, "&6CraftBahn &8» &cEs existiert kein Ziel mit diesem Namen");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs existiert kein Ziel mit diesem Namen");
                     return true;
                 }
 
                 if (args.length < 3) {
-                    sendMessage(p, "&6CraftBahn &8» &cEs wurde kein Spieler angegeben");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs wurde kein Spieler angegeben");
                     return true;
                 }
 
                 OfflinePlayer owner = Bukkit.getOfflinePlayer(args[2]);
                 if (owner == null || !owner.hasPlayedBefore()) {
-                    sendMessage(p, "&6CraftBahn &8» &cEs wurde kein Spieler mit dem Namen &e" + args[2] + " &cgefunden");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs wurde kein Spieler mit dem Namen &e" + args[2] + " &cgefunden");
                     return true;
                 }
 
@@ -467,29 +426,29 @@ public class Commands implements TabExecutor {
                 Player finalP = p;
                 destinationStorage.update(dest, (err, affectedRows) -> {
                     if (err != null)
-                        sendMessage(finalP, "&6CraftBahn &8» Es trat ein Fehler beim speichern der Änderungen auf. Bitte kontaktiere einen Administrator.");
+                        sendMessage(finalP, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs trat ein Fehler beim speichern der Änderungen auf. Bitte kontaktiere einen Administrator.");
                     else
-                        sendMessage(finalP, "&6CraftBahn &8» &6Du hast &e" + owner.getName() + " &6als Besitzer des Fahrziel &f'&e" + dest.getName() + "&f' &centfernt.");
+                        sendMessage(finalP, "&8[&e&l!&8] &b&lCraftBahn &8» &cDu hast &e" + owner.getName() + " &cals Besitzer des Fahrziel &e'&e" + dest.getName() + "&e' &centfernt.");
                 });
             }
 
             else if (args[0].equalsIgnoreCase("settype")) {
                 if (!p.hasPermission("ctdestinations.edit.settype")) {
-                    sendMessage(p, "&cDazu hast du keine Berechtigung.");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cDazu hast du keine Rechte");
                     return true;
                 }
 
                 if (args.length < 2) {
-                    sendMessage(p, "&6CraftBahn &8» &cEs wurde kein Ziel angegeben");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs wurde kein Ziel angegeben");
                     return true;
                 }
 
                 if (destinationStorage.getDestination(args[1], CraftBahnPlugin.getInstance().getServerName()) == null) {
-                    sendMessage(p, "&6CraftBahn &8» &cEs existiert kein Ziel mit diesem Namen");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs existiert kein Ziel mit diesem Namen");
                     return true;
                 }
                 if (args.length < 3) {
-                    sendMessage(p, "&6CraftBahn &8» &cEs wurde kein Stationstyp angegeben");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs wurde kein Stationstyp angegeben");
                     return true;
                 }
 
@@ -499,7 +458,7 @@ public class Commands implements TabExecutor {
                 } catch (Exception exception) {}
 
                 if (type == null) {
-                    sendMessage(p, "&6CraftBahn &8» &cUngültiger Stationstyp.");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cUngültiger Stationstyp.");
                     return true;
                 }
 
@@ -511,25 +470,25 @@ public class Commands implements TabExecutor {
                 Destination.DestinationType finalType = type;
                 destinationStorage.update(dest, (err, affectedRows) -> {
                     if (err != null)
-                        sendMessage(finalP, "&6CraftBahn &8» Es trat ein Fehler beim speichern der Änderungen auf. Bitte kontaktiere einen Administrator.");
+                        sendMessage(finalP, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs trat ein Fehler beim speichern der Änderungen auf. Bitte kontaktiere einen Administrator.");
                     else
-                        sendMessage(finalP, "&6CraftBahn &8» &e&f'" + dest.getName() + "&f' &6ist nun ein &e" + finalType);
+                        sendMessage(finalP, "&8[&e&l!&8] &b&lCraftBahn &8» &e'" + dest.getName() + "&e' &6ist nun ein &e" + finalType);
                 });
             }
 
             else if (args[0].equalsIgnoreCase("setlocation")) {
                 if (!p.hasPermission("ctdestinations.edit.setlocation")) {
-                    sendMessage(p, "&cDazu hast du keine Berechtigung.");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cDazu hast du keine Rechte");
                     return true;
                 }
 
                 if (args.length < 2) {
-                    sendMessage(p, "&6CraftBahn &8» &cEs wurde kein Ziel angegeben");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs wurde kein Ziel angegeben");
                     return true;
                 }
 
                 if (destinationStorage.getDestination(args[1], CraftBahnPlugin.getInstance().getServerName()) == null) {
-                    sendMessage(p, "&6CraftBahn &8» &cEs existiert kein Ziel mit diesem Namen");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs existiert kein Ziel mit diesem Namen");
                     return true;
                 }
 
@@ -540,27 +499,27 @@ public class Commands implements TabExecutor {
                 Player finalP = p;
                 destinationStorage.update(dest, (err, affectedRows) -> {
                     if (err != null)
-                        sendMessage(finalP, "&6CraftBahn &8» Es trat ein Fehler beim speichern der Änderungen auf. Bitte kontaktiere einen Administrator.");
+                        sendMessage(finalP, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs trat ein Fehler beim speichern der Änderungen auf. Bitte kontaktiere einen Administrator.");
                     else {
                         MarkerManager.addMarker(dest);
-                        sendMessage(finalP, "&6CraftBahn &8» &6Du hast die Position für das Ziel: &f'&e" + dest.getName() + "&f' &6aktualisiert.");
+                        sendMessage(finalP, "&8[&e&l!&8] &b&lCraftBahn &8» &6Du hast die Position für das Ziel: &e'&e" + dest.getName() + "&e' &6aktualisiert.");
                     }
                 });
             }
 
             else if (args[0].equalsIgnoreCase("setwarp")) {
                 if (!p.hasPermission("ctdestinations.edit.setwarp")) {
-                    sendMessage(p, "&cDazu hast du keine Berechtigung.");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cDazu hast du keine Rechte");
                     return true;
                 }
 
                 if (args.length < 2) {
-                    sendMessage(p, "&6CraftBahn &8» &cEs wurde kein Ziel angegeben");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs wurde kein Ziel angegeben");
                     return true;
                 }
 
                 if (destinationStorage.getDestination(args[1], CraftBahnPlugin.getInstance().getServerName()) == null) {
-                    sendMessage(p, "&6CraftBahn &8» &cEs existiert kein Ziel mit diesem Namen");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs existiert kein Ziel mit diesem Namen");
                     return true;
                 }
 
@@ -571,26 +530,26 @@ public class Commands implements TabExecutor {
                 Player finalP = p;
                 destinationStorage.update(dest, (err, affectedRows) -> {
                     if (err != null)
-                        sendMessage(finalP, "&6CraftBahn &8» Es trat ein Fehler beim speichern der Änderungen auf. Bitte kontaktiere einen Administrator.");
+                        sendMessage(finalP, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs trat ein Fehler beim speichern der Änderungen auf. Bitte kontaktiere einen Administrator.");
                     else {
-                        sendMessage(finalP, "&6CraftBahn &8» &6Du hast die Position für das Ziel: &f'&e" + dest.getName() + "&f' &6aktualisiert.");
+                        sendMessage(finalP, "&8[&e&l!&8] &b&lCraftBahn &8» &6Du hast die Position für das Ziel: &e'&e" + dest.getName() + "&e' &6aktualisiert.");
                     }
                 });
             }
 
             else if (args[0].equalsIgnoreCase("setprivate")) {
                 if (!p.hasPermission("ctdestinations.edit.setprivate")) {
-                    sendMessage(p, "&cDazu hast du keine Berechtigung.");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cDazu hast du keine Rechte");
                     return true;
                 }
 
                 if (args.length < 2) {
-                    sendMessage(p, "&6CraftBahn &8» &cEs wurde kein Ziel angegeben");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs wurde kein Ziel angegeben");
                     return true;
                 }
 
                 if (destinationStorage.getDestination(args[1], CraftBahnPlugin.getInstance().getServerName()) == null) {
-                    sendMessage(p, "&6CraftBahn &8» &cEs existiert kein Ziel mit diesem Namen");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs existiert kein Ziel mit diesem Namen");
                     return true;
                 }
 
@@ -601,9 +560,9 @@ public class Commands implements TabExecutor {
                 Player finalP = p;
                 destinationStorage.update(dest, (err, affectedRows) -> {
                     if (err != null)
-                        sendMessage(finalP, "&6CraftBahn &8» Es trat ein Fehler beim speichern der Änderungen auf. Bitte kontaktiere einen Administrator.");
+                        sendMessage(finalP, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs trat ein Fehler beim speichern der Änderungen auf. Bitte kontaktiere einen Administrator.");
                     else {
-                        sendMessage(finalP, "&6CraftBahn &8» &6Das Ziel: &f'&e" + dest.getName() + "'&f &6ist nun &cprivat");
+                        sendMessage(finalP, "&8[&e&l!&8] &b&lCraftBahn &8» &6Das Ziel: &e'&e" + dest.getName() + "'&e &6ist nun &eprivat");
                     }
                 });
             }
@@ -614,12 +573,12 @@ public class Commands implements TabExecutor {
                 }
 
                 if (args.length < 2) {
-                    sendMessage(p, "&6CraftBahn &8» &cEs wurde kein Ziel angegeben");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs wurde kein Ziel angegeben");
                     return true;
                 }
 
                 if (destinationStorage.getDestination(args[1], CraftBahnPlugin.getInstance().getServerName()) == null) {
-                    sendMessage(p, "&6CraftBahn &8» &cEs existiert kein Ziel mit diesem Namen");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs existiert kein Ziel mit diesem Namen");
                     return true;
                 }
 
@@ -630,16 +589,16 @@ public class Commands implements TabExecutor {
                 Player finalP = p;
                 destinationStorage.update(dest, (err, affectedRows) -> {
                     if (err != null)
-                        sendMessage(finalP, "&6CraftBahn &8» Es trat ein Fehler beim speichern der Änderungen auf. Bitte kontaktiere einen Administrator.");
+                        sendMessage(finalP, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs trat ein Fehler beim speichern der Änderungen auf. Bitte kontaktiere einen Administrator.");
                     else {
-                        sendMessage(finalP, "&6CraftBahn &8» &6Das Ziel: &f'&e" + dest.getName() + "&f' &6ist nun &2öffentlich.");
+                        sendMessage(finalP, "&8[&e&l!&8] &b&lCraftBahn &8» &6Das Ziel: &e'&e" + dest.getName() + "&e' &eist nun &eöffentlich.");
                     }
                 });
             }
 
             else if (args[0].equalsIgnoreCase("updatemarker")) {
                 if (!p.hasPermission("ctdestinations.edit.updatemarker")) {
-                    sendMessage(p, "&cDazu hast du keine Berechtigung.");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cDazu hast du keine Rechte");
                     return true;
                 }
 
@@ -649,7 +608,7 @@ public class Commands implements TabExecutor {
                 for (Destination dest : destinations)
                     MarkerManager.addMarker(dest, true);
 
-                sendMessage(p, "&6CraftBahn &8» &6Es wurden &e" + destinations.size() + " &6Marker erneuert.");
+                sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &6Es wurden &e" + destinations.size() + " &6Marker erneuert.");
             }
 
             else if (args[0].equalsIgnoreCase("reload")) {
@@ -661,25 +620,25 @@ public class Commands implements TabExecutor {
                 Player finalP = p;
                 destinationStorage.loadAll((err, destinations) -> {
                     if (err != null)
-                        sendMessage(finalP, "&6CraftBahn &8» &cBeim laden der Fahrziele ist ein Fehler aufgetreten");
+                        sendMessage(finalP, "&8[&e&l!&8] &b&lCraftBahn &8» &cBeim laden der Fahrziele ist ein Fehler aufgetreten");
                     else
-                        sendMessage(finalP, "&6CraftBahn &8» &2Es wurden &a" + destinations.size() + " &2Fahrziele geladen.");
+                        sendMessage(finalP, "&8[&e&l!&8] &b&lCraftBahn &8» &2Es wurden &a" + destinations.size() + " &2Fahrziele geladen.");
                 });
             }
 
             else if (args[0].equalsIgnoreCase("tp")) {
                 if (!p.hasPermission("ctdestinations.teleport")) {
-                    sendMessage(p, "&cDazu hast du keine Berechtigung.");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cDazu hast du keine Rechte");
                     return true;
                 }
 
                 if (args.length < 2) {
-                    sendMessage(p, "&6CraftBahn &8» &cEs wurde kein Ziel angegeben");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs wurde kein Ziel angegeben");
                     return true;
                 }
 
                 if (destinationStorage.getDestination(args[1], CraftBahnPlugin.getInstance().getServerName()) == null) {
-                    sendMessage(p, "&6CraftBahn &8» &cEs existiert kein Ziel mit diesem Namen");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cEs existiert kein Ziel mit diesem Namen");
                     return true;
                 }
 
@@ -688,10 +647,10 @@ public class Commands implements TabExecutor {
                 if (dest.getTeleportLocation().getServer().equalsIgnoreCase(CraftBahnPlugin.getInstance().getServerName())) {
                     Location loc = dest.getTeleportLocation().getBukkitLocation();
                     p.teleport(loc);
-                    sendMessage(p, "&6CraftBahn &8» &6Du wurdest zum Ziel: &f'&e" + dest.getName() + "&f' &6teleportiert.");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &6Du wurdest zum Ziel: &e'&e" + dest.getName() + "&e' &6teleportiert.");
                 }
                 else
-                    sendMessage(p, "&6CraftBahn &8» &cDas Ziel befindet sich auf einem anderen Server.");
+                    sendMessage(p, "&8[&e&l!&8] &b&lCraftBahn &8» &cDas Ziel befindet sich auf einem anderen Server.");
             }
         }
         return true;

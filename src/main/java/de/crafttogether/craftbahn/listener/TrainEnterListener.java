@@ -53,34 +53,24 @@ public class TrainEnterListener implements Listener {
     }
 
     private void sendEnterMessage(Player p, MinecartMember<?> cart) {
-        TextComponent message = Message.format("&e-------------- &c&lCraftBahn &e--------------");
-        message.addExtra(Message.newLine());
-        message.addExtra(Message.newLine());
-        message.addExtra(Message.format("&6CraftBahn &8» &eGuten Tag, Reisender!"));
-        message.addExtra(Message.newLine());
-        message.addExtra(Message.format("&6CraftBahn &8» &eVerstehst du nur "));
-        message.addExtra(Message.format("&c/bahnhof&e?"));
-
-        message.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/bahnhof"));
-        message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, (new ComponentBuilder(Message.format("&2Informationen zum Schienennetz"))).create()));
-        p.spigot().sendMessage(message);
+        TextComponent message;
 
         if (cart.getProperties().getDestination().isEmpty()) {
-            message = new TextComponent(Message.format("&6CraftBahn &8»"));
+            message = new TextComponent(Message.format("&8[&e&l!&8] &b&lCraftBahn &8»"));
             message.addExtra(Message.newLine());
-            message.addExtra(Message.format("&6CraftBahn &8» &c&lHinweis:"));
+            message.addExtra(Message.format("&8[&e&l!&8] &b&lCraftBahn &8» &c&lHinweis:"));
             message.addExtra(Message.newLine());
-            message.addExtra(Message.format("&6CraftBahn &8» &cDieser Zug hat noch kein Fahrziel."));
+            message.addExtra(Message.format("&8[&e&l!&8] &b&lCraftBahn &8» &cDieser Zug hat noch kein Fahrziel."));
 
             message.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/fahrziele"));
             message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, (new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', "&6Verfügbare Fahrziele anzeigen"))).create()));
             p.spigot().sendMessage(message);
         } else {
-            message = new TextComponent(Message.format("&6CraftBahn &8» "));
+            message = new TextComponent(Message.format("&8[&e&l!&8] &b&lCraftBahn &8» "));
             message.addExtra(Message.newLine());
-            message.addExtra(Message.format("&6CraftBahn &8» &eDieser Zug versucht, das Ziel:"));
+            message.addExtra(Message.format("&8[&e&l!&8] &b&lCraftBahn &8» &eDieser Zug versucht, das Ziel:"));
             message.addExtra(Message.newLine());
-            message.addExtra(Message.format("&6CraftBahn &8» &f'&6&l" + cart.getProperties().getDestination() + "&f' &ezu erreichen."));
+            message.addExtra(Message.format("&8[&e&l!&8] &b&lCraftBahn &8» &e'&e&l" + cart.getProperties().getDestination() + "&e' &ezu erreichen."));
 
             message.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/fahrziele"));
             message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, (new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', "&6Anderes Fahrziel auswählen")).create())));
@@ -88,7 +78,7 @@ public class TrainEnterListener implements Listener {
         }
 
         message = new TextComponent(Message.newLine());
-        message.addExtra(Message.format("&e----------------------------------------"));
+        message.addExtra(Message.format(""));
         p.spigot().sendMessage(message);
     }
 }

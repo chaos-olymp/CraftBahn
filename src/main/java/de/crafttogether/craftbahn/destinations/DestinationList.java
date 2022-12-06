@@ -42,47 +42,29 @@ public class DestinationList {
     public TextComponent getContentsPage() {
         TextComponent contents = new TextComponent();
 
-        TextComponent info = Message.format("&e-------------- &c&lCraftBahn &e--------------");
-        info.addExtra(Message.newLine());
-        info.addExtra(Message.newLine());
-        info.addExtra(Message.format("&6CraftBahn &8» &eGuten Tag, Reisender!"));
-        info.addExtra(Message.newLine());
-        info.addExtra(Message.format("&6CraftBahn &8» &eVerstehst du nur "));
-        info.addExtra(Message.format("&c/bahnhof&e?"));
-        info.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/bahnhof"));
-        info.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, (new ComponentBuilder(Message.format("&2Informationen zum Schienennetz"))).create()));
-
-        contents.addExtra(info);
+        contents.addExtra(Message.format("&8[&e&l!&8] &b&lCraftBahn &8» &6Mögliche Fahrziele:"));
         contents.addExtra(Message.newLine());
-
-        contents.addExtra(Message.format("&6CraftBahn &8»"));
-        contents.addExtra(Message.newLine());
-        contents.addExtra(Message.format("&6CraftBahn &8» &6&lMögliche Fahrziele:"));
-        contents.addExtra(Message.newLine());
-        contents.addExtra(Message.format("&6CraftBahn &8»"));
-        contents.addExtra(Message.newLine());
-
-        TextComponent btnMainStations = Message.format("&6CraftBahn &8» &2> &eHauptbahnhöfe");
+        TextComponent btnMainStations = Message.format("&8[&e&l!&8] &b&lCraftBahn &8» &eHauptbahnhöfe");
         btnMainStations.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/fahrziele MAIN_STATION 2"));
-        btnMainStations.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, (new ComponentBuilder(Message.format("&2Hauptbahnhöfe"))).create()));
+        btnMainStations.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, (new ComponentBuilder(Message.format("&eHauptbahnhöfe"))).create()));
         contents.addExtra(btnMainStations);
         contents.addExtra(Message.newLine());
 
-        TextComponent btnStations = Message.format("&6CraftBahn &8» &2> &eSystem-Bahnhöfe");
+        TextComponent btnStations = Message.format("&8[&e&l!&8] &b&lCraftBahn &8» &eSystem-Bahnhöfe");
         btnStations.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/fahrziele STATION 2"));
-        btnStations.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, (new ComponentBuilder(Message.format("&2Bahnhöfe"))).create()));
+        btnStations.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, (new ComponentBuilder(Message.format("&eBahnhöfe"))).create()));
         contents.addExtra(btnStations);
         contents.addExtra(Message.newLine());
 
-        TextComponent btnPublicStations = Message.format("&6CraftBahn &8» &2> &eÖffentliche Bahnhöfe");
+        TextComponent btnPublicStations = Message.format("&8[&e&l!&8] &b&lCraftBahn &8» &eÖffentliche Bahnhöfe");
         btnPublicStations.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/fahrziele PUBLIC_STATION 2"));
-        btnPublicStations.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, (new ComponentBuilder(Message.format("&2Öffentlich"))).create()));
+        btnPublicStations.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, (new ComponentBuilder(Message.format("&eÖffentlich"))).create()));
         contents.addExtra(btnPublicStations);
         contents.addExtra(Message.newLine());
 
-        TextComponent btnPlayerStations = Message.format("&6CraftBahn &8» &2> &eSpieler-Bahnhöfe");
+        TextComponent btnPlayerStations = Message.format("&8[&e&l!&8] &b&lCraftBahn &8» &eSpieler-Bahnhöfe");
         btnPlayerStations.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/fahrziele PLAYER_STATION 2"));
-        btnPlayerStations.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, (new ComponentBuilder(Message.format("&2Spielerbahnhöfe"))).create()));
+        btnPlayerStations.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, (new ComponentBuilder(Message.format("&eSpielerbahnhöfe"))).create()));
         contents.addExtra(btnPlayerStations);
         contents.addExtra(Message.newLine());
 
@@ -149,7 +131,7 @@ public class DestinationList {
                 row++;
             }
 
-            page.addExtra(Message.format("&6CraftBahn &8» &7# &6&l" + capitalize(serverName) + ":"));
+            page.addExtra(Message.format("&8[&e&l!&8] &b&lCraftBahn &8» &6" + capitalize(serverName) + ":"));
             page.addExtra(Message.newLine());
 
             row = row + 2;
@@ -160,13 +142,13 @@ public class DestinationList {
 
                 TextComponent btnFahrziel;
                 if (dest.getType() == Destination.DestinationType.PLAYER_STATION)
-                    btnFahrziel = Message.format("&6CraftBahn &8» &e" + dest.getName());
+                    btnFahrziel = Message.format("&8[&e&l!&8] &b&lCraftBahn &8» &e" + dest.getName());
                 else
-                    btnFahrziel = Message.format("&6CraftBahn &8» &6" + dest.getName());
+                    btnFahrziel = Message.format("&8[&e&l!&8] &b&lCraftBahn &8» &e" + dest.getName());
 
                 Collection<Destination> duplicates = CraftBahnPlugin.getInstance().getDestinationStorage().getDestinations(dest.getName());
 
-                String hoverText = "&2/fahrziel " + dest.getName() + (duplicates.size() > 1 ? (" &7" + dest.getServer()) : "");
+                String hoverText = "&7/fahrziel " + dest.getName() + (duplicates.size() > 1 ? (" &7" + dest.getServer()) : "");
 
                 if (this.showType)
                     hoverText += "\n&6Stations-Typ: &e" + dest.getType().toString();
@@ -198,7 +180,7 @@ public class DestinationList {
 
                 if (dest.getLocation() != null && this.showLocation) {
                     TextComponent tpBtn = new TextComponent();
-                    tpBtn.addExtra(Message.format(" &7[&fTP&7]"));
+                    tpBtn.addExtra(Message.format(" &7<Teleport>"));
                     tpBtn.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/fahrzieledit tp " + dest.getName()));
                     tpBtn.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, (new ComponentBuilder(Message.format("&6Teleportiere zum Zielort"))).create()));
                     btnFahrziel.addExtra(tpBtn);
@@ -243,27 +225,27 @@ public class DestinationList {
             output.addExtra(Message.newLine());
             TextComponent btnPrevious;
             if (pageIndex > 1) {
-                btnPrevious = Message.format("&a----<< &6Zurück");
+                btnPrevious = Message.format("&8< &7Zurück");
                 btnPrevious.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, command + " " + filter + (pageIndex - 1)));
                 btnPrevious.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, (
-                        new ComponentBuilder(Message.format("&6Vorherige Seite: &e" + (pageIndex - 1)))
+                        new ComponentBuilder(Message.format("&7Vorherige Seite: &e" + (pageIndex - 1)))
                 ).create()));
             } else
-                btnPrevious = Message.format("&2----<< &7Zurück");
+                btnPrevious = Message.format("&8< &7Zurück");
 
             output.addExtra(btnPrevious);
 
-            output.addExtra(Message.format(" &2" + pageIndex + "&7/&2" + pages.size() + " "));
+            output.addExtra(Message.format(" &e" + pageIndex + "&8/&e" + pages.size() + " "));
 
             TextComponent btnForward;
             if (pageIndex < this.pages.size()) {
-                btnForward = Message.format("&6Weiter &2>>----");
+                btnForward = Message.format("&7Weiter &8>");
                 btnForward.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, command + " " + filter + (pageIndex + 1)));
                 btnForward.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, (
-                        new ComponentBuilder(Message.format("&6Nächste Seite: &e" + (pageIndex + 1)))
+                        new ComponentBuilder(Message.format("&7Nächste Seite: &e" + (pageIndex + 1)))
                 ).create()));
             } else
-                btnForward = Message.format("&7Weiter >>----");
+                btnForward = Message.format("&7Weiter &8>");
 
             output.addExtra(btnForward);
             output.addExtra(Message.newLine());
@@ -324,12 +306,12 @@ public class DestinationList {
         build();
 
         if (pageIndex < 1) {
-            player.sendMessage(Message.format("&6CraftBahn &8» &cUngültige Seitennummer."));
+            player.sendMessage(Message.format("&8[&e&l!&8] &b&lCraftBahn &8» &cUngültige Seitennummer."));
             return;
         }
 
         if (pageIndex > getPageCount()) {
-            player.sendMessage(Message.format("&6CraftBahn &8» &cEs gibt nur " + getPageCount() + " Seite" + (getPageCount() > 1 ? "n":"")));
+            player.sendMessage(Message.format("&8[&e&l!&8] &b&lCraftBahn &8» &cEs gibt nur " + getPageCount() + " Seite" + (getPageCount() > 1 ? "n":"")));
             return;
         }
 
@@ -337,7 +319,7 @@ public class DestinationList {
 
         if (this.showFooter) {
             message.addExtra(Message.newLine());
-            message.addExtra(Message.format("&e----------------------------------------"));
+            message.addExtra(Message.format(""));
         }
 
         player.sendMessage(message);

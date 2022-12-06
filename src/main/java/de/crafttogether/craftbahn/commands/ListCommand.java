@@ -31,7 +31,7 @@ public class ListCommand implements TabExecutor {
             MinecartGroup train = TCHelper.getTrain(p);
 
             if (train == null) {
-                p.sendMessage(Message.format("&6CraftBahn &8» &cBitte setze dich zuerst in einen Zug."));
+                p.sendMessage(Message.format("&8[&e&l!&8] &b&lCraftBahn &8» &cBitte setze dich zuerst in einen Zug."));
                 return true;
             }
 
@@ -46,7 +46,7 @@ public class ListCommand implements TabExecutor {
             MinecartGroup train = TCHelper.getTrain(p);
 
             if (train == null) {
-                p.sendMessage(Message.format("&6CraftBahn &8» &cBitte setze dich zuerst in einen Zug."));
+                p.sendMessage(Message.format("&8[&e&l!&8] &b&lCraftBahn &8» &cBitte setze dich zuerst in einen Zug."));
                 return true;
             }
 

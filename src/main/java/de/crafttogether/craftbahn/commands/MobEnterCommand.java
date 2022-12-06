@@ -31,7 +31,7 @@ public class MobEnterCommand implements TabExecutor {
             MinecartGroup train = TCHelper.getTrain(p);
 
             if (train == null) {
-                p.sendMessage(Message.format("&6CraftBahn &8» &cBitte setze dich zuerst in einen Zug."));
+                p.sendMessage(Message.format("&8[&e&l!&8] &b&lCraftBahn &8» &cBitte setze dich zuerst in einen Zug."));
                 return true;
             }
 
@@ -52,9 +52,9 @@ public class MobEnterCommand implements TabExecutor {
             }
 
             if (entered > 0)
-                p.sendMessage(Message.format("&6CraftBahn &8» &6Es wurden &e" + entered + " Tiere &6in deinen Zug gesetzt."));
+                p.sendMessage(Message.format("&8[&e&l!&8] &b&lCraftBahn &8» &6Es wurden &e" + entered + " Tiere &6in deinen Zug gesetzt."));
             else
-                p.sendMessage(Message.format("&6CraftBahn &8» &cEs wurden keine Tiere in einem Umkreis von 5 Blöcken zu dir gefunden"));
+                p.sendMessage(Message.format("&8[&e&l!&8] &b&lCraftBahn &8» &cEs wurden keine Tiere in einem Umkreis von 5 Blöcken zu dir gefunden"));
         }
 
         return true;

@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 -- Tabellenstruktur für Tabelle `cb_destinations`
 --
 
-CREATE TABLE `cb_destinations` (
+CREATE TABLE `srv_destinations` (
   `id` int(11) NOT NULL,
   `name` varchar(24) NOT NULL,
   `type` varchar(24) NOT NULL,
@@ -53,7 +53,7 @@ CREATE TABLE `cb_destinations` (
 --
 -- Indizes für die Tabelle `cb_destinations`
 --
-ALTER TABLE `cb_destinations`
+ALTER TABLE `srv_destinations`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -63,7 +63,7 @@ ALTER TABLE `cb_destinations`
 --
 -- AUTO_INCREMENT für Tabelle `cb_destinations`
 --
-ALTER TABLE `cb_destinations`
+ALTER TABLE `srv_destinations`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
